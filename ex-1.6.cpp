@@ -1,13 +1,13 @@
 #include<iostream>
 using namespace std;
 
-void tinh(int a, int mang[], int i = 0, int x = 0) {
-    if (i < a) {
-        x += mang[i] * (a - i); // cong thuc tong quat
-        tinh(a, mang, i + 1, x);
-    } else {
-        mang[a] = x;
-    }
+int *tinh (int a, int mang[], int i= 0, int x = 0){
+	if (i== a){
+		mang[a]=x;
+		return mang;	
+	} 
+	x= x+mang[i]*(a-i);
+	return tinh (a, mang, i+1, x);
 }
 
 void ham(int a, int mang[]) {
@@ -28,7 +28,8 @@ int main() {
 	int n;
 	ham(8, mang1);
 	cout << "So x7 la: " << mang1[7] <<endl;
-	int n; cin >> n;
+	cout << "n= ";
+	cin >> n;
 	int mang2[n]; 
 	mang2[0]=1; // dieu kien ban dau cua ham
 	mang2[1]=1; // dieu kien ban dau cua ham
