@@ -3,128 +3,106 @@
 
 using namespace std;
 
-//tinh do dai cua chuoi
-int strlen(char s[]) {
-    int i = 0;
-    while (1) {
-        if (s[i] == '\0') {
-            return i; //gia tri cuoi cung
-        }
-        i++;
-    }
+//ki tu la chu cai
+bool isalpha (char s){
+	return (s >= 'a' && s <= 'z') || (s >= 'A' && s <= 'Z');
 }
-//cau a
-//tim tu dai nhat
-void tudainhat(const char s[]) {
-    char temp[256]; //luu tu hien tai dang xet
-    char tudainhat[256];
-    int dodaitudainhat = 0;
-    int vitribatdau = 0;
 
-    for (int i = 0; s[i] != '\0'; ++i) {
-        if (s[i] == ' ' || s[i + 1] == '\0') {
-            int len = i - vitribatdau + 1;
-            for (int j = 0; j < len; ++j) {
-                temp[j] = s[vitribatdau + j];
+// Câu a
+// tim tu dai nhat
+string tudainhat(string &str) {
+    string tudainhat = "";
+    string tudangxet = "";
+
+    for (char ch : str) {
+        if (isalpha(ch)) { //kiem tra ki tu do la chu cai khong
+            tudangxet += ch; //ghep tudangxet voi ch
+        } else {
+            if (tudangxet.length() > tudainhat.length()) {
+                tudainhat = tudangxet;
             }
-            temp[len] = '\0';
-            if (len > dodaitudainhat) {
-                dodaitudainhat = len;
-                for (int j = 0; j < len; ++j) {
-                    tudainhat[j] = temp[j];
-                }
-                tudainhat[len] = '\0';
-            }
-            vitribatdau = i + 1;
+            tudangxet = "";
         }
     }
-    cout << tudainhat << endl;
+    //so sanh do dai chuoi
+    if (tudangxet.length() > tudainhat.length()) {
+        tudainhat = tudangxet;
+    }
+    return tudainhat;
 }
 
-
-//cau b
-//tu ben phai
-string tubenphai (char s[]){
-	string kq= " ";
-	for (int i= strlen(s)- 1; i>=0; i--){
-		if (s[i]!= ' '){
-			kq= s[i]+ kq; // ghep s[i] voi kq
-		} else {
-			break;
-		}
-	}
-	return kq;
+// Câu b
+//tim tu ben phai
+string tubenphai(string s) {
+    string kq = "";
+    for (int i = s.length(); i >= 0; i--) {
+        if (s[i] != ' ') {
+            kq = s[i] + kq;              
+        } else { // sau khi gap ki tu khoang trang thi dung
+            break;
+        }
+    }
+    return kq;
 }
 
-//tu ben trai
-string tubentrai (char s[]){
-	string kq= " "; // luu ki tu dau ben trai cua chuoi
-	for (int i= 0; s[i]!= '\0'; i++){
-		if (s[i] != ' ' || s[i=1]== '\0'){
-			kq= kq + s[i]; //ghep chuoi kq voi s[i]
-		} else {
-			break;
-		}
-	}
-	return kq;
+//tim tu ben trai
+string tubentrai(string s) {
+    string kq = "";
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] != ' ' || i == s.length() - 1) {
+            kq += s[i];
+        } else { // sau khi gap ki tu khoang trang thi dung
+            break;
+        }
+    }
+    return kq;
 }
 
-
-//cau c
-//chuoi dai nhat
-void chuoidainhat(char s[], int n, string& dainhat) {
-    int dodaimax = dainhat.length(); //do dai cua tu dai nhat
-    int len = strlen(s); //do dai
-
-    if (len > dodaimax) {
-        dainhat = s; //gan s cho chuoi dainhat neu do dai cua s lon hon dodaimax
-    } else if (len == dodaimax) {
+// Câu c
+// Chuoi dai nhat
+void chuoidainhat(string s, string& dainhat) {
+    if (s.length() > dainhat.length()) {
+        dainhat = s;
+    } else if (s.length() == dainhat.length()) { //chuoi bang chuoi dai nhat thi in ra luon chuoi do
         cout << dainhat << endl;
-        cout << s << endl; //in ra chuoi co do dai bang chuoi dai nhat
+        cout << s << endl;
     }
 }
 
-//cau d
-//dem so luong phan tu cua chuoi
-int count (char s[]){
-	if (strlen(s)== 0){ //neu chuoi rong
-		return 0;
-	}
-	
-	int cnt= 1;
-	for (int i= 0; i< strlen(s); i++){
-		if (s[i]== ' '){
-			cnt++;
-		}
-	}
-	return cnt;
+// Câu d
+// dem so luong phan tu cua moi chuoi
+int demtu (string s) {
+    int count = 1;
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] == ' ') {
+            count++;
+        }
+    }
+    return count;
 }
 
-//cau e
-//dem so luong tu your
-int demtucandem(char s[], const char* tucandem) {
+// Câu e
+// dem so luong tu your
+int demtucandem(string s, string tucandem) {
     int count = 0;
-    int len = strlen(tucandem);
-    bool datimthay; //danh dau tim kiem
+    if (tucandem.length() == 0) { //neu chuoi rong
+        return 0;
+    }
     
-    if (len== 0){
-    	return 0;
-	}
-	
-	for (int i= 0; s[i]!= '\0'; i++){
-		if (s[i]== tucandem[0]){ //s[i] giong voi ki tu dau tien cua tu can tim
-			datimthay= true;
-			for (int j= 0; j< len; j++){ // so sanh ki tu con lai cua s[i] voi tu can tim
-				if (s[i+j]!= tucandem[j]){
-					datimthay= false; // nhung tu phia sau khac voi tu can tim
-					break;
-				}
-			}
-			if (datimthay){ //ki tu sau s[i] giong voi tu con lai
-				count++;
-			}
-		}
-	}
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] == tucandem[0]) { //ki tu thu i giong voi tu "y"
+            bool datimthay = true;
+            for (int j = 0; j < tucandem.length(); j++) { //so sanh ki tu sau i voi uor
+                if (s[i + j] != tucandem[j]) {
+                    datimthay = false; // ki tu sau i khac our
+                    break;
+                }
+            }
+            if (datimthay) { // tu giong tu your
+                count++;
+            }
+        }
+    }
     return count;
 }
 
@@ -136,35 +114,48 @@ int main() {
     cin >> n;
     cin.ignore();
 
-    char s[256];
-    string dainhat;
+    string s[1000];
     
-    for (int i= 0; i< n; i++){
-    	cin.getline(s, 256);
-    	tudainhat (s);
-    	cout << tubentrai(s) << " " << tubenphai(s) << endl;
+    int size= 0; // kich thuoc cua chuoi
+    
+    //nhap chuoi va tang kich thuoc tung chuoi
+    for (int i= 0; i< n && size < 1000; i++){
+    	getline (cin, s[size++]);
+	}
+	
+	//cau a. tu dai nhat
+	cout << "CAU a:" << endl;
+    for (int i = 0; i < size;i++){ 
+        cout << tudainhat(s[i]) << endl;
+    }
+    
+    //cau b. tu ben trai va tu ben phai
+    cout << "CAU b:" << endl;
+    for (int i= 0; i< size; i++){
+    	cout << tubentrai(s[i]) << " " << tubenphai(s[i]) << endl;      
 	}
     
+    //cau c. chuoi dai nhat
+    cout << "CAU c" << endl;
+    string dainhat; // chuoi dai nhat
+    dainhat = "";
+    for (int i= 0; i< size; i++){
+    	chuoidainhat(s[i], dainhat);
+	}
+    cout << dainhat << endl;
+    
+    //cau d. so luong tu trong n chuoi
+    cout << "CAU d:" << endl;
+    int soluongchu= 0;
+    int soluongtuyour= 0;
+    for (int i= 0; i< n; i++){
+    	soluongchu+= demtu(s[i]);
+    	soluongtuyour+= demtucandem(s[i], "your");
+	}
+    cout << soluongchu <<endl;
+    
+    //cau e. so luong tu "your"
+    cout << "CAU e:" << endl;
+    cout << soluongtuyour<< endl;
     return 0;
 }
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
