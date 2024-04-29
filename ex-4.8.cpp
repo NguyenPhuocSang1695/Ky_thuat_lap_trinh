@@ -43,7 +43,7 @@ bool isprime(int n){
 	if (n< 2){
 		return false;
 	}
-	for (int i=2; i< sqrt(n); i++){
+	for (int i=2; i<= sqrt(n); i++){
 		if (n%i==0)
 		return false;
 	}
@@ -51,23 +51,32 @@ bool isprime(int n){
 }
 
 //dem so phan so tu va mau so deu la so nguyen to
-void cauc (Ps* ps, int n){
+int cauc (Ps* ps, int n){
 	int count= 0;
+	bool found;
 	for (int i=0; i< n; i++){
-		if (isprime(ps[i].tu)&& isprime(ps[i].mau)){
+		if (isprime (ps[i].tu)){
+			found= true;
+			if (!isprime(ps[i].mau)){
+				found= false;
+			}
+			if (found== true){
 			count++;
+			}
 		}
 	}
-	cout << count << endl;
+	return count;
 }
 
 //cau d
+//phan so co gia tri lon nhat
 void phansomax (Ps* ps, int n){
-	int maxps= 0.0;
-	int x; //
+	float maxps= 0.0; // gia tri lon nhat
+	int x; // luu toa do phan so
 	for (int i=0; i< n; i++){
-		float thuong= ps[i].tu/ ps[i].mau;
+		float thuong= float (ps[i].tu)/ ps[i].mau;
 		if (maxps < thuong){
+			maxps= thuong;
 			x= i;
 		}
 	}
@@ -77,25 +86,25 @@ void phansomax (Ps* ps, int n){
 //cau e
 //phan so nho hon 1 lon nhat
 void phanson1max (Ps* ps, int n){
-	int max= INT_MIN;
-	int x= 0;
+	float max= 0.0; // gia tri lon nhat
+	int x= 0; //toa do phan so lon nhat
 	for (int i= 0; i< n; i++){
-		if (ps[i].tu/ ps[i].mau< 1&& max < ps[i].tu% ps[i].mau){ // ps < 1 thi phan nguyen la 0, nen chi can so sanh phan du
-				max= ps[i].tu/ ps[i].mau;
-				x= i;
+		if (ps[i].tu/ ps[i].mau< 1&& max < float (ps[i].tu)/ ps[i].mau){ 
+				max= float (ps[i].tu)/ ps[i].mau; //cap nhat gia tri cua max
+				x= i; //cap nhat toa do phan so lon nhat
 		}
 	}
-	cout << ps[x].tu << "/" << ps[x].mau << endl;
+	cout << ps[x].tu << "/" << ps[x].mau << " ";
 }
 
 //phan so lon hon 1 nho nhat
 void phansol1min (Ps* ps, int n){
-	int min= INT_MAX;
-	int y= 0;
+	float min= INT_MAX; //gia tri nho nhat
+	int y= 0; //toa do phan tu gia tri nho nhat
 	for (int i= 0;i< n; i++){
-		if (ps[i].tu/ps[i].mau >= 1 && ps[i].tu/ps[i].mau< min || (ps[i].tu/ps[i].mau== min && ps[i].tu% ps[i].mau< min)){
-				min= ps[i].tu/ ps[i].mau;
-				y= i;
+		if (ps[i].tu/ps[i].mau >= 1 && float (ps[i].tu)/ps[i].mau< min){
+				min= float (ps[i].tu)/ ps[i].mau; //cap nhat gia tri nho nhat
+				y= i; // cap nhat toa do gia tri nho nhat
 		}
 	}
 	cout << ps[y].tu << "/" << ps[y].mau << endl; 
@@ -116,6 +125,7 @@ int ucln (int &a, int &b){
 	}
 	return a;
 }
+
  //dem phan so toi gian
 void demphansotoigian (Ps* ps, int n){
 	int count= 0;
@@ -130,7 +140,7 @@ void demphansotoigian (Ps* ps, int n){
 
 
 //cau g
-
+//tinh trung binh cong
 float trbcong(Ps ps[],int n){
 	float tong=0.0;
 	for(int i=0 ;i< n;i++){
@@ -148,7 +158,8 @@ int main(){
 	nhap (ps, n);
 	caua(ps, n);
 	caub (ps, n);
-	cauc (ps, n);
+	cout << cauc (ps, n) << endl;
+	cout << "cau d" << endl;
 	phansomax (ps, n);
 	phanson1max (ps, n);
 	phansol1min (ps, n);
