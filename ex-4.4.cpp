@@ -25,7 +25,7 @@ void xuat(){
 //cau a
 //tim phan tu lon nhat
 int findmax () {
-	int max= a[0][0];
+	int max= INT_MIN; 
 	int count= 0;
 	for (int i=0; i< m; i++){
 		int j;
@@ -48,7 +48,7 @@ int dem(){
 			}
 		}	
 	}
-	return count-1; // coi phan tu dau tien tim duoc bang max chinh la max-> khong dem
+	return count; // coi phan tu dau tien tim duoc bang max chinh la max-> khong dem
 }
 
 //cau b
