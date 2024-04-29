@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int a[100][100], b[100], m, n, minn; //i1, j1, i2, j2;
+int a[100][100], b[100], m, n; 
 
 //Nhap mang
 void nhap(){
@@ -23,54 +23,55 @@ void xuat(){
 }
 
 //cau a
-//tim phan tu nho nhat
 void timmin (){
-	int min= a[0][0];
+	//tim phan tu nho nhat
 	for (int i=0; i< m; i++){
-		for (int j=1; j< n; j++){
+		int min= INT_MAX; // gan min= gia tri lon nhat
+		for (int j=0; j< n; j++){
 			if (min> a[i][j]){
 				min= a[i][j];
 			}
 		}
 		b[i]= min; // dua min vao b[i]
 	}
-}		
-   
-//phan tu lon nhat trong so phan tu nho nhat
-void minmax (){
-	int max= b[0];
-	for (int i=0; i< m; i++){
+	
+	//tim phan tu lon nhat trong cac phan tu nho nhat
+	int max= INT_MIN; //gan max= gia tri nho nhat
+	for (int i= 0; i< m; i++){
 		if (max< b[i]){
 			max= b[i];
 		}
 	}
-	cout<< max << endl;
-}
-
+	cout << max << endl;
+}		
+                    
 //cau b
-void findminspace() {
-	int spamin;
-	int i1, j1, i2, j2;
-    spamin = abs(a[0][0] - a[0][1]); // khoang cach nho nhat
-    i1 = j1 = i2 = j2 = 0; // min cua i1,2 va j1,2
+void timvitrinhonhat() {
+    int khoangcachnhonhat = INT_MAX; //khoang cach nho nhat
+    int i1, j1, i2, j2; //vi tri 2 diem co khaong cach nho nhat
     for(int i = 0; i < m; i++) {
         for(int j = 0; j < n; j++) {
-            for(int k = i; k < m; k++) {
-                int j1 = (k == i ? j + 1 : 0);
-                for(int l = j1; l < n; l++) {
-                    int khcach = abs(a[i][j] - a[k][l]);
-                    if(spamin > khcach) {
-                        spamin = khcach;
-                        i1 = i;
-                        j1 = j;
-                        i2 = k;
-                        j2 = l;
+            //so sanh voi cac phan tu con lai trong cung hang
+            for(int l = j + 1; l < n; l++) {
+                int khoang_cach = abs(a[i][j] - a[i][l]);
+                if(khoangcachnhonhat > khoang_cach) {
+                    khoangcachnhonhat = khoang_cach;
+                    i1 = i; j1 = j; i2 = i; j2 = l;
+                }
+            }
+            //so sanh voi cac han ben duoi
+            for(int k = i + 1; k < m; k++) {
+                for(int l = 0; l < n; l++) {
+                    int khoang_cach = abs(a[i][j] - a[k][l]);
+                    if(khoangcachnhonhat > khoang_cach) {
+                        khoangcachnhonhat = khoang_cach;
+                        i1 = i; j1 = j; i2 = k; j2 = l;
                     }
                 }
             }
         }
     }
-    cout << minn << " " << i1 + 1 << " " << j1 + 1 << " " << i2 + 1 << " " << j2 + 1 << endl;
+    cout << khoangcachnhonhat << " " << i1 + 1 << " " << j1 + 1 << " " << i2 + 1 << " " << j2 + 1 << endl;
 }
 
 int main(){
@@ -80,8 +81,7 @@ int main(){
 	nhap ();
 	cout << "CAU a: ";
 	timmin();
-	minmax();
 	cout << "CAU b: ";
-	findminspace();
+	timvitrinhonhat();
 	return 0;
 }
