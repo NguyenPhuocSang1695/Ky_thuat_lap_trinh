@@ -70,6 +70,7 @@ int main(){
 	int a[n];
 	enter(a, n);
 	cout << countprimes(a, n)<< endl;
+	
 	sort(a, n);
 	print(a, n);
 
