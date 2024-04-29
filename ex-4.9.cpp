@@ -47,6 +47,7 @@ int main() {
 	int n; cin >> n; cin.ignore();
 	char s[256];
 	int sum= 0;
+	cout << "CAU a:" << endl;
 	for (int i= 0; i< n; ++i){
 		cin.getline (s, 256);
 		//cau a
@@ -54,6 +55,7 @@ int main() {
 		sum+= count(s); // tong do cua tat ca cac chuoi
 	}
 	//cau b
+	cout << "CAU b:" << endl;
 	cout  << sum;
     return 0;
 }
