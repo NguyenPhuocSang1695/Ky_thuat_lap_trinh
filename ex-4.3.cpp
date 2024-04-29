@@ -36,7 +36,7 @@ bool isprimes (int n){
 }
 
 
-//dem so nguyen to
+//dem so nguyen to (khong trung)
 int demprimes() {
     bool appeared[1000] = {false}; // M?ng d? danh d?u cac s? nguyen t? da xu?t hi?n
     int count = 0;
@@ -51,6 +51,18 @@ int demprimes() {
     return count;
 }
 
+//dem so nguyen to (dem luon cac so trung nhau)
+int demprimes (){
+	int count= 0;
+	for (int i= 0; i< m; i++){
+		for (int j= 0; j< n; j++){
+			if (isprimes(a[i][j])){
+			count++;
+		}
+		}
+	}
+	return count;
+}
 
 //cau b
 //tong cac phan tu cua dong
