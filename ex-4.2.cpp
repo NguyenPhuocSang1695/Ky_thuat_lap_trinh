@@ -44,7 +44,7 @@ int daycon() {
         if (a[i] <= a[i+ 1]) {
             dodaichuoicon++; // tang chieu dai
         } else if (dodaichuoicon > dainhat){ //cap nhat do dai dai nhat
-        	dainhat= dodaichuoicon+ 1;
+        	dainhat= dodaichuoicon;
             dodaichuoicon = 1; //khi khong thoa a[i] <= a[i+ 1]
         }
     }
