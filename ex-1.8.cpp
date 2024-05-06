@@ -1,6 +1,12 @@
 #include<iostream>
 using namespace std;
-
+//tinh to hop
+int c(int k, int n){
+ if (n==k || k==0){
+  return 1;
+ }
+  return c(k-1, n-1)+ c(k, n-1);
+}
 //tam gia pascal
 int pascal (int k, int n) {
  if (k == 0 || k == n) return 1;
